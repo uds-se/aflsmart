@@ -870,9 +870,9 @@ static void update_input_structure(u8* fname, struct queue_entry* q) {
       dup2(pipefd[1], STDOUT_FILENO);
       dup2(pipefd[1], STDERR_FILENO);
       ifname = alloc_printf("-inputFilePath=%s", fname);
-      ofname = alloc_printf("-outputFilePath=%s/chunks/%s.repaired", out_dir,
+      ofname = alloc_printf("%s/chunks/%s.repaired.chunks", out_dir,
                             basename(fname));
-      execlp("peach", "peach", "-1", ifname, ofname, input_model_file, (char*) NULL);
+      execlp("parser.sh", "parser.sh", fname, ofname, (char*) NULL);
       exit(1); /* Stop the child process upon failure. */
     } else {
       close(pipefd[1]);
@@ -9001,11 +9001,6 @@ int main(int argc, char **argv) {
         if (input_model_file) FATAL("Multiple -g options not supported");
 
         input_model_file = optarg;
-
-        /* Check if exists */
-        FILE * f = fopen(input_model_file, "r");
-        if (f) fclose(f);
-        else FATAL("File %s does not exist!", input_model_file);
 
         break;
 
