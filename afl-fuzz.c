@@ -8988,10 +8988,6 @@ int main(int argc, char **argv) {
 
         if (!stricmp(optarg, "peach")) {
           model_type = MODEL_PEACH;
-          if (!program_exist("peach")) {
-						FATAL("peach cannot be found. Please compile Peach and setup PATH environment variable correctly.");
-					}
-
         } else {
           PFATAL ("Unknown Input Model. Only Peach is supported now");
         }
